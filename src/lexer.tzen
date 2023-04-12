@@ -1,0 +1,10 @@
+
+type Lexer<
+  $: {  },
+  // SM = State Machine
+  SM: { },
+  // CS = Confirmed State
+  CS: {}
+> = ^{
+  return 1;
+}

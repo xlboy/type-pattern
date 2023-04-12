@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "plugins": [{ "name": "@type-zen/ts-plugin" }]
+  },
+  "include": ["src", "scripts", "global.d.ts"]
+}
