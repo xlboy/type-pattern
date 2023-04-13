@@ -1,0 +1,29 @@
+import type * as Extract from './extract.tzen'
+import type { ErrorWrapper } from './common'
+
+// 消费当前字符串头部的 Token
+export type MainMatcher<CurStr: string> = ^{
+  if (Extract.Escape<CurStr> == (infer _ extends Array<any>)) {
+    return _
+  } else if (Extract.AnyChar<CurStr> == (infer _ extends Array<any>)) {
+    return _
+  } else if (Extract.Or<CurStr> == (infer _ extends Array<any>)) {
+    return _
+  } else if (Extract.NullOrMore<CurStr> == (infer _ extends Array<any>)) {
+    return _
+  } else if (Extract.OneOrMore<CurStr> == (infer _ extends Array<any>)) {
+    return _
+  } else if (Extract.OneOrNone<CurStr> == (infer _ extends Array<any>)) {
+    return _
+  } else if (Extract.ExpressionStart<CurStr> == (infer _ extends Array<any>)) {
+    return _
+  } else if (Extract.ExpressionEnd<CurStr> == (infer _ extends Array<any>)) {
+    return _
+  } 
+  /* 最后的 */
+  else if (Extract.NormalChar<CurStr> == (infer _ extends Array<any>)) {
+    return _
+  } else {
+    return ErrorWrapper<"Unrecognized Token1">
+  }
+}

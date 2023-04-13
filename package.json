@@ -10,6 +10,7 @@
     "@type-zen/ts-plugin": "^0.1.0",
     "prettier": "^2.8.7",
     "rimraf": "^5.0.0",
+    "type-toolkit": "1.0.0-alpha.2",
     "typescript": "^5.0.4"
   }
 }

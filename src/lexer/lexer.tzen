@@ -1,0 +1,19 @@
+import type { MainMatcher } from './main-matcher.tzen'
+
+export type Lexer<
+  StrToConsume: string,
+  CurState: 'main' | '()' | '{}' | '[]' = 'main',
+  Output: Array<any> = []
+> = ^{
+  if (StrToConsume == '') {
+    return Output
+  } else if (CurState == 'main') {
+    type Result = MainMatcher<StrToConsume>
+    
+    if (Result == Array<any>) {  
+      return Lexer<Result[0], 'main', [...Output, Result[1]]>
+    } else {
+      return Result
+    }
+  }
+}

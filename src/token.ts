@@ -1,9 +1,28 @@
 export enum TokenType {
+  // [.]
   RangeBlock,
+  // [^.]
+  RangeBlockExclude,
+  // (.)
   CaptureGroup,
-  AlphaLowerCase,
-  AlphaUppercase,
-  QuestionMark
+  Repeat,
+  // \*
+  Escape,
+  // a
+  NormalChar,
+  // ?
+  OneOrNone,
+  // .
+  AnyChar,
+  // |
+  Or,
+  // *
+  NullOrMore,
+  // +
+  OneOrMore,
+  // ^
+  ExpressionStart,
+  // $
+  ExpressionEnd
 }
 
-export type TokenRule = {};

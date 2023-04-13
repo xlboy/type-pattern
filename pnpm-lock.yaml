@@ -4,18 +4,24 @@ specifiers:
   '@type-zen/ts-plugin': ^0.1.0
   prettier: ^2.8.7
   rimraf: ^5.0.0
+  type-toolkit: 1.0.0-alpha.2
   typescript: ^5.0.4
 
 devDependencies:
   '@type-zen/ts-plugin': 0.1.0
   prettier: 2.8.7
   rimraf: 5.0.0
+  type-toolkit: 1.0.0-alpha.2_typescript@5.0.4
   typescript: 5.0.4
 
 packages:
 
   /@type-zen/core/0.0.1-alpha.18:
     resolution: {integrity: sha512-2uFftmKwzGBl+WF8ynEW+wd0e1qccjyk8doTy+2AMR6jCPnmqam4JLlV4mycShMoHCRBiOgdNzRm3BW6qunymA==}
+    dev: true
+
+  /@type-zen/preset-type/0.2.0:
+    resolution: {integrity: sha512-UsH3wQigJh+HA5sjuOV8rUhaib8YBmV2/01e/ZODQBHTK2vNh+IHrB0yVR8uzoseD9ZAZE4hk8PXZT90aM1GLw==}
     dev: true
 
   /@type-zen/ts-plugin/0.1.0:
@@ -85,6 +91,16 @@ packages:
     hasBin: true
     dependencies:
       glob: 10.0.0
+    dev: true
+
+  /type-toolkit/1.0.0-alpha.2_typescript@5.0.4:
+    resolution: {integrity: sha512-a8pe6apwaIAsw/5tFPZbpRigzuADt8ypuDjVyEntVkaf0Ettyj+c3YDkdvnZEumHqGx7oh9KyKkFIjSEeLIHXg==}
+    engines: {node: '>=16.14'}
+    peerDependencies:
+      typescript: '> 4.9'
+    dependencies:
+      '@type-zen/preset-type': 0.2.0
+      typescript: 5.0.4
     dev: true
 
   /typescript/5.0.4:

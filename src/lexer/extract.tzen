@@ -1,0 +1,90 @@
+import type { TokenWrapper } from './common';
+import type { TokenType } from '../token'
+
+export type AnyChar<S> = ^{
+  if (S == `${infer H extends '.'}${infer R}`){
+    return [R, TokenWrapper<TokenType.AnyChar>]
+  } else {
+    return false
+  }
+}
+
+export type Or<S> = ^{
+  if (S == `${infer H extends '|'}${infer R}`){
+    return [R, TokenWrapper<TokenType.Or>]
+  } else {
+    return false
+  }
+}
+
+export type NullOrMore<S> = ^{
+  if (S == `${infer H extends '*'}${infer R}`){
+    return [R, TokenWrapper<TokenType.NullOrMore>]
+  } else {
+    return false
+  }
+}
+
+export type OneOrMore<S> = ^{
+  if (S == `${infer H extends '+'}${infer R}`){
+    return [R, TokenWrapper<TokenType.OneOrMore>]
+  } else {
+    return false
+  }
+}
+
+export type OneOrNone<S> = ^{
+  if (S == `${infer H extends '?'}${infer R}`){
+    return [R, TokenWrapper<TokenType.OneOrNone>]
+  } else {
+    return false
+  }
+}
+
+export type ExpressionStart<S> = ^{
+  if (S == `${infer H extends '^'}${infer R}`){
+    return [R, TokenWrapper<TokenType.ExpressionStart>]
+  } else {
+    return false
+  }
+}
+
+export type ExpressionEnd<S> = ^{
+  if (S == `${infer H extends '$'}${infer R}`){
+    return [R, TokenWrapper<TokenType.ExpressionEnd>]
+  } else {
+    return false
+  }
+}
+
+export type Escape<S> = ^ {
+  if (S == `\\${infer H}${infer R}`){
+    return [R, TokenWrapper<TokenType.Escape, H>]
+  } else {
+    return false
+  }
+}
+
+export type NormalChar<S> = ^{
+  if (S == `${infer H}${infer R}`){
+    return [R, TokenWrapper<TokenType.NormalChar, H>]
+  }
+}
+
+export type Repeat<S> = ^{
+  if (S == `{${infer Body}}${infer R}`){
+    if (Body == `${infer Count extends number}`) {
+      return [R, TokenWrapper<TokenType.Repeat, { type: "exact", value: Count }>]
+    } else if (Body == `${infer LCount extends number},${infer HCount extends number}`) {
+      return [R, TokenWrapper<TokenType.Repeat, { type: "range", value: [LCount, HCount] }>]
+    } else if (Body == `${infer LCount extends number},`) {
+      return [R, TokenWrapper<TokenType.Repeat, { type: "min", value: LCount }>]
+    } else if (Body == `,${infer HCount extends number}`) {
+      return [R, TokenWrapper<TokenType.Repeat, { type: "max", value: HCount }>]
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+}
