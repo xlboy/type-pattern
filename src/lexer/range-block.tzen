@@ -1,0 +1,82 @@
+import type { TokenWrapper, Whitespace } from './common';
+import type { NumberChars, AlphaLowerCaseChars, AlphaUppercaseChars } from '../common'
+import type * as Extract from './extract.tzen'
+import type { TokenType } from '../token'
+
+export type RangeBlock<S> = ^{
+  if (S == `[${infer Body}]${infer R}`) {
+    if (Body == `^${infer Content}`) {
+      type Result = Eat<Content>
+
+      if (Result == false) {
+        return false
+      } else {
+        return [R, TokenWrapper<TokenType.RangeBlockExclude, Result>]
+      }
+    } else {
+      type Result = Eat<Body>
+
+      if (Result == false) {
+        return false
+      } else {
+        return [R, TokenWrapper<TokenType.RangeBlock, Result>]
+      }
+    }
+  } else {
+    return false
+  }
+}
+
+type Eat<S: string, Output: Array<any> = []> = ^{
+  if (S == '') {
+    return Output
+  } else {
+    type Result = EatMatcher<S>
+    
+    if (Result == false) {
+      return false
+    } else {
+      return Eat<Result[0], [...Output, Result[1]]>
+    }
+  }
+}
+
+type EatMatcher<S: string> = ^{
+  if (Extract.Escape<S> == (infer _ extends Array<any>)) {
+    return _
+  } else if (NumberRange<S> == (infer _ extends Array<any>)) {
+    return _
+  } else if (AlphaLowerCaseRange<S> == (infer _ extends Array<any>)) {
+    return _
+  } else if (AlphaUppercaseRange<S> == (infer _ extends Array<any>)) {
+    return _
+  } else if (Extract.NormalChar<S> == (infer _ extends Array<any>)) {
+    return _
+  } else {
+    return false
+  }
+}
+
+type NumberRange<S> = ^{
+  if (S == `${infer L extends NumberChars}-${infer H extends NumberChars}${infer R}`) {
+    return [R, TokenWrapper<TokenType.RangeBlock_Number, [L, H]>]
+  } else {
+    return false
+  }
+}
+
+type AlphaLowerCaseRange<S> = ^{
+  if (S == `${infer StartAlphaIndex extends AlphaLowerCaseChars}-${infer EndAlphaIndex extends AlphaLowerCaseChars}${infer R}`) {
+    return [R, TokenWrapper<TokenType.RangeBlock_AlphaLowerCase, [StartAlphaIndex, EndAlphaIndex]>]
+  } else {
+    return false
+  }
+}
+
+type AlphaUppercaseRange<S> = ^{
+  if (S == `${infer StartAlphaIndex extends AlphaUppercaseChars}-${infer EndAlphaIndex extends AlphaUppercaseChars}${infer R}`) {
+    return [R, TokenWrapper<TokenType.RangeBlock_AlphaUppercase, [StartAlphaIndex, EndAlphaIndex]>]
+  } else {
+    return false
+  }
+}

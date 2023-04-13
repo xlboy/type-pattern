@@ -4,6 +4,7 @@ import type { MainMatcher } from './main-matcher.tzen';
 import type * as Extract from './extract.tzen';
 import type { ErrorWrapper, TokenWrapper } from './common';
 import type { TokenType } from '../token';
+import type { RangeBlock } from './range-block.tzen';
 
 type _Extract = {
   Escape: Checker<
@@ -96,6 +97,33 @@ type _Extract = {
       >
     ]
   >;
+  RangeBlock: Checker<
+    [
+      Equal<
+        RangeBlock<'[a-z]ab'>,
+        [
+          'ab',
+          TokenWrapper<
+            TokenType.RangeBlock,
+            [TokenWrapper<TokenType.RangeBlock_AlphaLowerCase, ['a', 'z']>]
+          >
+        ]
+      >,
+      Equal<
+        RangeBlock<'[a-z0-9]ab'>,
+        [
+          'ab',
+          TokenWrapper<
+            TokenType.RangeBlock,
+            [
+              TokenWrapper<TokenType.RangeBlock_AlphaLowerCase, ['a', 'z']>,
+              TokenWrapper<TokenType.RangeBlock_Number, ['0', '9']>
+            ]
+          >
+        ]
+      >
+    ]
+  >;
 };
 
 namespace Matcher {
@@ -172,8 +200,6 @@ type _Lexer = {
     ]
   >;
 };
-
-type A = MainMatcher<'ab'>;
 
 type Equal<X, Y> = (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2
   ? true

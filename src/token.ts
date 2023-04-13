@@ -3,6 +3,9 @@ export enum TokenType {
   RangeBlock,
   // [^.]
   RangeBlockExclude,
+  RangeBlock_Number,
+  RangeBlock_AlphaLowerCase,
+  RangeBlock_AlphaUppercase,
   // (.)
   CaptureGroup,
   Repeat,
