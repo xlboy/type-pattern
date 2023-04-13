@@ -109,7 +109,31 @@ namespace Matcher {
       Equal<MainMatcher<'*ab'>, ['ab', TokenWrapper<TokenType.NullOrMore>]>,
       Equal<MainMatcher<'+ab'>, ['ab', TokenWrapper<TokenType.OneOrMore>]>,
       Equal<MainMatcher<'^ab'>, ['ab', TokenWrapper<TokenType.ExpressionStart>]>,
-      Equal<MainMatcher<'$ab'>, ['ab', TokenWrapper<TokenType.ExpressionEnd>]>
+      Equal<MainMatcher<'$ab'>, ['ab', TokenWrapper<TokenType.ExpressionEnd>]>,
+      Equal<
+        MainMatcher<'{1,2}ab'>,
+        ['ab', TokenWrapper<TokenType.Repeat, { type: 'range'; value: [1, 2] }>]
+      >,
+      Equal<
+        MainMatcher<'{1,}ab'>,
+        ['ab', TokenWrapper<TokenType.Repeat, { type: 'min'; value: 1 }>]
+      >,
+      Equal<
+        MainMatcher<'{,2}ab'>,
+        ['ab', TokenWrapper<TokenType.Repeat, { type: 'max'; value: 2 }>]
+      >,
+      Equal<
+        MainMatcher<'{1}ab'>,
+        ['ab', TokenWrapper<TokenType.Repeat, { type: 'exact'; value: 1 }>]
+      >,
+      Equal<MainMatcher<'{1 }ab'>, ['1 }ab', TokenWrapper<TokenType.NormalChar, '{'>]>,
+      Equal<
+        MainMatcher<'{ 1,2}ab'>,
+        [' 1,2}ab', TokenWrapper<TokenType.NormalChar, '{'>]
+      >,
+      Equal<MainMatcher<'{ 1}ab'>, [' 1}ab', TokenWrapper<TokenType.NormalChar, '{'>]>,
+      Equal<MainMatcher<'{ 1,}ab'>, [' 1,}ab', TokenWrapper<TokenType.NormalChar, '{'>]>,
+      Equal<MainMatcher<'{ ,2}ab'>, [' ,2}ab', TokenWrapper<TokenType.NormalChar, '{'>]>
     ]
   >;
 }
@@ -135,6 +159,14 @@ type _Lexer = {
           TokenWrapper<TokenType.NullOrMore>,
           TokenWrapper<TokenType.AnyChar>,
           TokenWrapper<TokenType.OneOrMore>
+        ]
+      >,
+      Equal<
+        Lexer<'^1{1,2}'>,
+        [
+          TokenWrapper<TokenType.ExpressionStart>,
+          TokenWrapper<TokenType.NormalChar, '1'>,
+          TokenWrapper<TokenType.Repeat, { type: 'range'; value: [1, 2] }>
         ]
       >
     ]

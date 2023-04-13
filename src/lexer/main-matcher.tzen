@@ -5,6 +5,8 @@ import type { ErrorWrapper } from './common'
 export type MainMatcher<CurStr: string> = ^{
   if (Extract.Escape<CurStr> == (infer _ extends Array<any>)) {
     return _
+  } else if (Extract.Repeat<CurStr> == (infer _ extends Array<any>)) {
+    return _
   } else if (Extract.AnyChar<CurStr> == (infer _ extends Array<any>)) {
     return _
   } else if (Extract.Or<CurStr> == (infer _ extends Array<any>)) {

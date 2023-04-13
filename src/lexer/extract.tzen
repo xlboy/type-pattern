@@ -1,4 +1,4 @@
-import type { TokenWrapper } from './common';
+import type { TokenWrapper, Whitespace } from './common';
 import type { TokenType } from '../token'
 
 export type AnyChar<S> = ^{
@@ -73,13 +73,23 @@ export type NormalChar<S> = ^{
 
 export type Repeat<S> = ^{
   if (S == `{${infer Body}}${infer R}`){
-    if (Body == `${infer Count extends number}`) {
+    if (Body == `${any}${Whitespace}${any}`) {
+      return false
+    } else 
+    
+    if (Body == `${infer Count extends number}${infer _R extends ''}`) {
       return [R, TokenWrapper<TokenType.Repeat, { type: "exact", value: Count }>]
-    } else if (Body == `${infer LCount extends number},${infer HCount extends number}`) {
+    } else 
+    
+    if (Body == `${infer LCount extends number},${infer HCount extends number}`) {
       return [R, TokenWrapper<TokenType.Repeat, { type: "range", value: [LCount, HCount] }>]
-    } else if (Body == `${infer LCount extends number},`) {
+    } else 
+    
+    if (Body == `${infer LCount extends number},`) {
       return [R, TokenWrapper<TokenType.Repeat, { type: "min", value: LCount }>]
-    } else if (Body == `,${infer HCount extends number}`) {
+    } else 
+    
+    if (Body == `,${infer HCount extends number}`) {
       return [R, TokenWrapper<TokenType.Repeat, { type: "max", value: HCount }>]
     } else {
       return false
