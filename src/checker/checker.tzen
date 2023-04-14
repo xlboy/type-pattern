@@ -1,0 +1,6 @@
+import type { ASTNode } from './checker.tzen'
+
+
+// export type Checker<
+  // Nodes: Array<ASTNode>,
+  

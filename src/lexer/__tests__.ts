@@ -196,6 +196,26 @@ type _Lexer = {
           TokenWrapper<TokenType.NormalChar, '1'>,
           TokenWrapper<TokenType.Repeat, { type: 'range'; value: [1, 2] }>
         ]
+      >,
+      Equal<
+        Lexer<'^1[a-zdd\\d][^1]'>,
+        [
+          TokenWrapper<TokenType.ExpressionStart>,
+          TokenWrapper<TokenType.NormalChar, '1'>,
+          TokenWrapper<
+            TokenType.RangeBlock,
+            [
+              TokenWrapper<TokenType.RangeBlock_AlphaLowerCase, ['a', 'z']>,
+              TokenWrapper<TokenType.NormalChar, 'd'>,
+              TokenWrapper<TokenType.NormalChar, 'd'>,
+              TokenWrapper<TokenType.Escape, 'd'>
+            ]
+          >,
+          TokenWrapper<
+            TokenType.RangeBlockExclude,
+            [TokenWrapper<TokenType.NormalChar, '1'>]
+          >
+        ]
       >
     ]
   >;

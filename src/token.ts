@@ -28,4 +28,3 @@ export enum TokenType {
   // $
   ExpressionEnd
 }
-

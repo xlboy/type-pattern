@@ -1,10 +1,13 @@
 import type * as Extract from './extract.tzen'
+import type { RangeBlock } from './range-block.tzen'
 import type { ErrorWrapper } from './common'
 
 // 消费当前字符串头部的 Token
 export type MainMatcher<S: string> = ^{
   if (Extract.Escape<S> == (infer _ extends Array<any>)) {
     return _
+  } else if (RangeBlock<S> == (infer _ extends Array<any>)) {
+    return _ 
   } else if (Extract.Repeat<S> == (infer _ extends Array<any>)) {
     return _
   } else if (Extract.AnyChar<S> == (infer _ extends Array<any>)) {

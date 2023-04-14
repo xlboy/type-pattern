@@ -1,0 +1,16 @@
+import type { ExprRule } from './common'
+
+/*
+expr: 
+  基本规则： 
+    普通字符 a, b, c
+    范围字符 [a-z]
+
+*/
+
+export type ExprChecker<
+  CurStr: string,
+  Rules: Array<ExprRule>
+> = ^{
+  return 1;
+}
